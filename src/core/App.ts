@@ -1,9 +1,9 @@
 // ========== App
 // import all modules
-import express, { type Application } from 'express'
+import express, { Application } from 'express'
 import helmet from 'helmet'
 import compression from 'compression'
-import cors, { type CorsOptions } from 'cors'
+import cors, { CorsOptions } from 'cors'
 import mongoose from 'mongoose'
 import path from 'path'
 import swaggerUi from 'swagger-ui-express'
@@ -63,6 +63,10 @@ class App {
     )
 
     this.app.use('/api/v1', UserRoutes.routes)
+  }
+
+  public get server (): Application {
+    return this.app
   }
 
   public listen (): void {
