@@ -1,15 +1,21 @@
 // ========== User Controller
 // import all modules
-import { type Request, type Response } from 'express'
+import { Request, type Response } from 'express'
 import UserService from '../services/UserService'
 import { response } from '../helpers/response'
-import { type IUserResponse } from '../types/user.response.types'
+import { IRegisterUserResponse } from '../types/user.response.types'
 
 class UserController {
-  public getUsers (req: Request, res: Response): Response {
+  public async registerUser (req: Request, res: Response): Promise<Response> {
     const userService = new UserService()
-    const result = userService.registerUser(req.body)
-    return response<IUserResponse>(res, result)
+    const result = await userService.registerUser(req.body)
+    return response<IRegisterUserResponse>(res, result)
+  }
+
+  public async loginUser (req: Request, res: Response): Promise<Response> {
+    const userService = new UserService()
+    const result = await userService.loginUser(req.body)
+    return response<IRegisterUserResponse>(res, result)
   }
 }
 
