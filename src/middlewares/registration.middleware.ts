@@ -6,11 +6,13 @@ import { response } from '../helpers/response'
 import { parsingValidationError } from '../helpers/parsingValidationError'
 
 export const validateGetUsersBody = [
+  body('firstName', 'The first name is required').notEmpty(),
+  body('firstName', 'The first name should be a string').isString(),
+
+  body('lastName', 'The last name should be a string').default('').isString(),
+
   body('phoneNumber', 'The phone number is required').notEmpty(),
-
   body('phoneNumber', 'The phone number is invalid').isMobilePhone('any'),
-
-  body('password', 'password is required').notEmpty(),
 
   (req: Request, res: Response, next: NextFunction): Response | boolean => {
     const errors = validationResult(req)
