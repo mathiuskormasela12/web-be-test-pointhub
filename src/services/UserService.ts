@@ -1,10 +1,11 @@
 // ========== User Service
 // import all modules
-
 import { type Request } from 'express'
+import { Post, Route } from 'tsoa'
 import { type IUserResponse } from '../types/user.response.types'
 import { type IResponse } from '../types/response.types'
 
+@Route('/api/v1')
 class UserService {
   private readonly params: Request['params']
   private readonly query: Request['query']
@@ -16,6 +17,7 @@ class UserService {
     this.body = req.body
   }
 
+  @Post('/users')
   public getUsers (): IResponse<IUserResponse> {
     return {
       code: 200,

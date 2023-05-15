@@ -5,6 +5,8 @@ import helmet from 'helmet'
 import compression from 'compression'
 import cors, { type CorsOptions } from 'cors'
 import mongoose from 'mongoose'
+import path from 'path'
+import swaggerUi from 'swagger-ui-express'
 import config from '../config'
 import UserRoutes from '../routes/User'
 
@@ -30,6 +32,9 @@ class App {
       this.app.use(require('morgan')('dev'))
     }
 
+    // Setup static files
+    this.app.use(express.static(path.join(__dirname, '../../public')))
+
     // Setup cors
     const corsOptions: CorsOptions = {
       origin (origin, callback) {
@@ -46,6 +51,16 @@ class App {
     mongoose.connect(config?.dbUri)
       .then(() => { console.log('The database has been connected') })
       .catch((err: Error) => { console.log(err) })
+
+    this.app.use(
+      '/docs',
+      swaggerUi.serve,
+      swaggerUi.setup(undefined, {
+        swaggerOptions: {
+          url: '/swagger.json'
+        }
+      })
+    )
 
     this.app.use('/api/v1', UserRoutes.routes)
   }

@@ -19,7 +19,7 @@ export const validateGetUsersBody = [
       const result = parsingValidationError(errors.array())
 
       return response(res, {
-        code: 200,
+        code: 400,
         errors: result
       })
     }

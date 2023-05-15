@@ -15,6 +15,7 @@ export default {
     expiresIn: process.env?.REFRESH_TOKEN_EXPIRES_IN
   },
   clients: [
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'http://localhost:8080'
   ]
 }
