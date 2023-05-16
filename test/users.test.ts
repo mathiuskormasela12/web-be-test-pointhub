@@ -10,7 +10,8 @@ const app = new App()
 
 const data = {
   phoneNumber: faker.phone.number('62######'),
-  name: faker.string.alphanumeric()
+  name: faker.string.alphanumeric(),
+  password: 'P4$$w0rd123'
 }
 
 describe('POST - Register User', () => {
@@ -85,11 +86,12 @@ describe('POST - Login User', () => {
       .expect('Content-Type', /json/)
       .send({
         name: data.name,
-        phoneNumber: faker.phone.number('62######')
+        phoneNumber: faker.phone.number('62######'),
+        password: 'P4$$w0rd123'
       })
 
     expect(response.body).toEqual({
-      code: 401,
+      code: 400,
       message: 'Failed to login',
       errors: {
         phoneNumber: ['The phone number does not exists']
@@ -123,7 +125,8 @@ describe('POST - Create Access Token', () => {
       .expect('Content-Type', /json/)
       .send({
         phoneNumber: faker.phone.number('62######'),
-        name: faker.string.alphanumeric()
+        name: faker.string.alphanumeric(),
+        password: 'P4$$w0rd123'
       })
 
     const response = await request(app.server)

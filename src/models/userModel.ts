@@ -8,6 +8,10 @@ const schema: Schema = new Schema({
     type: String,
     required: true
   },
+  password: {
+    type: String,
+    required: true
+  },
   phoneNumber: {
     type: String,
     required: true,

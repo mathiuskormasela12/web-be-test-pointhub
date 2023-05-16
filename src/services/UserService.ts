@@ -2,6 +2,7 @@
 // import all modules
 import { Body, Example, Post, Response, Route, SuccessResponse, Tags } from 'tsoa'
 import jwt from 'jsonwebtoken'
+import bcryptjs from 'bcryptjs'
 import { IRegisterUserResponse } from '../types/user.response.types'
 import { IResponse } from '../types/response.types'
 import { IRegisterUserSchemaBody, ILoginUserSchemaBody, ICreateAccessTokenBody } from '../schemas/UserSchema'
@@ -38,9 +39,11 @@ class UserService {
           }
         }
       } else {
+        const password = await bcryptjs.hash(body.password, 8)
         const result = await userModel.create({
           name: body.name,
-          phoneNumber: body.phoneNumber
+          phoneNumber: body.phoneNumber,
+          password
         })
 
         const { accessToken, refreshToken, error = '' } = generateToken(result._id.toString())
@@ -89,9 +92,19 @@ class UserService {
     try {
       const user = await userModel.findOne({
         phoneNumber: body.phoneNumber
-      }).lean().select({ _id: 1 })
+      }).lean().select({ _id: 1, password: 1 })
 
-      if (user != null) {
+      const errors: Record<string, string[]> = {}
+
+      if (user === null) {
+        Object.assign(errors, { phoneNumber: ['The phone number does not exists'] })
+      }
+
+      if ((user !== null) && !(await bcryptjs.compare(body.password, user.password))) {
+        Object.assign(errors, { password: ['The password is wrong'] })
+      }
+
+      if (user != null && Object.keys(errors).length === 0) {
         const { accessToken, refreshToken, error = '' } = generateToken(user._id.toString())
 
         if (error.length > 0) {
@@ -114,12 +127,11 @@ class UserService {
           }
         }
       } else {
+        console.log('MACBOOK =>', errors)
         return {
-          code: 401,
+          code: 400,
           message: 'Failed to login',
-          errors: {
-            phoneNumber: ['The phone number does not exists']
-          }
+          errors
         }
       }
     } catch (err) {
