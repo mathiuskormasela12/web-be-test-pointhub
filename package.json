@@ -4,8 +4,8 @@
   "description": "RESTful API Chat App",
   "main": "server.js",
   "scripts": {
-    "start:prod": "node dist/src/server.js",
-    "build": "tsc -p .",
+    "start:prod": "node dist/server.js",
+    "build": "tsoa spec && tsc -p .",
     "start": "concurrently \"nodemon\" \"nodemon -x tsoa spec\"",
     "test": "jest"
   },

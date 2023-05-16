@@ -18,5 +18,6 @@
 		"@typescript-eslint/no-misused-promises": "off",
 		"@typescript-eslint/no-floating-promises": "off",
 		"no-tabs": "off"
-	}
+	},
+	"ignorePatterns": ["**/test/**/*.test.ts"]
 }
