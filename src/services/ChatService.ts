@@ -1,17 +1,21 @@
 // ========== Chat Service
 // import all modules
 import { Request as ExpressRequest } from 'express'
-import { Body, Post, Route, Tags, Request, Security, Header, Get } from 'tsoa'
+import { Body, Post, Route, Tags, Request, Security, Header, Get, SuccessResponse, Example, Response } from 'tsoa'
 import { IChatSchemaBody, IGetChatListResponse } from '../schemas/ChatSchema'
 import { IResponse } from '../types/response.types'
 import { ISendChatResponse } from '../types/chat.response.types'
 import chatModel from '../models/chatModel'
 import mongoose from 'mongoose'
+import { failedToGetChatListsResponse, failedToSendChatResponse, successToGetChatListsResponse, successToSendChatResponse } from '../example/chat.response.example'
 
 @Route('/api/v1/chats')
 @Tags('Chats')
 class ChatService {
   @Security('jwt', ['x-access-token'])
+  @SuccessResponse(200, 'Success Send Chat')
+  @Example<IResponse<ISendChatResponse>>(successToSendChatResponse)
+  @Response<IResponse<ISendChatResponse>>(400, 'Failed Send Chat', failedToSendChatResponse)
   @Post('/')
   public async sendChat (
     @Body() body: IChatSchemaBody,
@@ -34,15 +38,19 @@ class ChatService {
       }
     } catch (err) {
       const error = err as Error
+      console.log(error.message)
 
       return {
         code: 400,
-        message: error.message
+        message: 'Failed to sent message'
       }
     }
   }
 
   @Security('jwt', ['x-access-token'])
+  @SuccessResponse(200, 'Success Get Chat Lists')
+  @Example<IResponse<IGetChatListResponse>>(successToGetChatListsResponse)
+  @Response<IResponse<IGetChatListResponse>>(400, 'Failed Get Chat Lists', failedToGetChatListsResponse)
   @Get('/{receiverId}')
   public async getChatLists (
     @Request() req: ExpressRequest,
@@ -127,9 +135,11 @@ class ChatService {
     } catch (err) {
       const error = err as Error
 
+      console.log(error.message)
+
       return {
         code: 400,
-        message: error.message
+        message: 'Failed to get chat lists'
       }
     }
   }

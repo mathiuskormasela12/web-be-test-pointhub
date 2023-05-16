@@ -25,7 +25,7 @@ describe('POST - Send Chat', () => {
       .expect('Content-Type', /json/)
       .send({
         phoneNumber: faker.phone.number('62######'),
-        name: faker.person.fullName()
+        name: faker.string.alphanumeric()
       })
 
     const responseOfRegistrationForReceiver = await request(app.server)
@@ -33,7 +33,7 @@ describe('POST - Send Chat', () => {
       .expect('Content-Type', /json/)
       .send({
         phoneNumber: faker.phone.number('62######'),
-        name: faker.person.fullName()
+        name: faker.string.alphanumeric()
       })
 
     const chat = `Test_${Date.now()}`
@@ -75,7 +75,7 @@ describe('GET - Get Chat Lists', () => {
       .expect('Content-Type', /json/)
       .send({
         phoneNumber: faker.phone.number('62######'),
-        name: faker.person.fullName()
+        name: faker.string.alphanumeric()
       })
 
     const responseOfRegistrationForReceiver = await request(app.server)
@@ -83,7 +83,7 @@ describe('GET - Get Chat Lists', () => {
       .expect('Content-Type', /json/)
       .send({
         phoneNumber: faker.phone.number('62######'),
-        name: faker.person.fullName()
+        name: faker.string.alphanumeric()
       })
 
     const receiverId = responseOfRegistrationForReceiver.body?.result?._id as string ?? ''

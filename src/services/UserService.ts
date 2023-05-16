@@ -1,6 +1,6 @@
 // ========== User Service
 // import all modules
-import { Body, Post, Route, Tags } from 'tsoa'
+import { Body, Example, Post, Response, Route, SuccessResponse, Tags } from 'tsoa'
 import jwt from 'jsonwebtoken'
 import { IRegisterUserResponse } from '../types/user.response.types'
 import { IResponse } from '../types/response.types'
@@ -8,10 +8,14 @@ import { IRegisterUserSchemaBody, ILoginUserSchemaBody, ICreateAccessTokenBody }
 import userModel from '../models/userModel'
 import { generateToken } from '../helpers/generateToken'
 import config from '../config'
+import { failedResponseCreateAccessTokenExample, failedResponseLoginUserExample, failedResponseRegisterUserExample, successResponseCreateAccessTokenExample, successResponseLoginUserExample, successResponseRegisterUserExample } from '../example/user.response.example'
 
 @Route('/api/v1/users')
 @Tags('Users')
 class UserService {
+  @SuccessResponse(201, successResponseRegisterUserExample.message)
+  @Example<IResponse<IRegisterUserResponse>>(successResponseRegisterUserExample)
+  @Response<IResponse<IRegisterUserResponse>>(400, failedResponseRegisterUserExample.message, failedResponseRegisterUserExample)
   @Post('/register')
   public async registerUser (
     @Body() body: IRegisterUserSchemaBody
@@ -67,6 +71,9 @@ class UserService {
     }
   }
 
+  @SuccessResponse(201, successResponseLoginUserExample.message)
+  @Example<IResponse<IRegisterUserResponse>>(successResponseLoginUserExample)
+  @Response<IResponse<IRegisterUserResponse>>(400, failedResponseLoginUserExample.message, failedResponseLoginUserExample)
   @Post('/login')
   public async loginUser (
     @Body() body: ILoginUserSchemaBody
@@ -117,6 +124,9 @@ class UserService {
     }
   }
 
+  @SuccessResponse(200, 'Success to Generate Access Token')
+  @Example<IResponse<IRegisterUserResponse>>(successResponseCreateAccessTokenExample)
+  @Response<IResponse<IRegisterUserResponse>>(400, 'Failed to Generate Access Token', failedResponseCreateAccessTokenExample)
   @Post('/access-token')
   public createAccessToken (@Body() body: ICreateAccessTokenBody): IResponse<IRegisterUserResponse> {
     try {

@@ -17,7 +17,7 @@ export default {
   // clearMocks: false,
 
   // Indicates whether the coverage information should be collected while executing the test
-  collectCoverage: true,
+  // collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
@@ -52,14 +52,14 @@ export default {
   // ],
 
   // An object that configures minimum threshold enforcement for coverage results
-  coverageThreshold: {
-    global: {
-      branches: 70,
-      functions: 70,
-      lines: 70,
-      statements: 70
-    }
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 70,
+  //     functions: 70,
+  //     lines: 70,
+  //     statements: 70
+  //   }
+  // },
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,

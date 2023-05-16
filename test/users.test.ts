@@ -10,7 +10,7 @@ const app = new App()
 
 const data = {
   phoneNumber: faker.phone.number('62######'),
-  name: faker.person.fullName()
+  name: faker.string.alphanumeric()
 }
 
 describe('POST - Register User', () => {
@@ -123,9 +123,9 @@ describe('POST - Create Access Token', () => {
       .expect('Content-Type', /json/)
       .send({
         phoneNumber: faker.phone.number('62######'),
-        name: faker.person.fullName()
+        name: faker.string.alphanumeric()
       })
-    console.log(responseOfRegistration.body)
+
     const response = await request(app.server)
       .post('/api/v1/users/access-token')
       .expect('Content-Type', /json/)
