@@ -48,6 +48,14 @@ describe('POST - Register User', () => {
       }
     })
   })
+
+  it('should return 400 error code (Register)', async () => {
+    const response = await request(app.server)
+      .post('/api/v1/users/register')
+      .expect('Content-Type', /json/)
+
+    expect(response.body.code).toBe(400)
+  })
 })
 
 describe('POST - Login User', () => {
@@ -87,5 +95,55 @@ describe('POST - Login User', () => {
         phoneNumber: ['The phone number does not exists']
       }
     })
+  })
+
+  it('should return 400 error code (Login)', async () => {
+    const response = await request(app.server)
+      .post('/api/v1/users/login')
+      .expect('Content-Type', /json/)
+
+    expect(response.body.code).toBe(400)
+  })
+})
+
+describe('POST - Create Access Token', () => {
+  beforeAll(async () => {
+    await mongoose.connect(config?.database?.uri, { dbName: config?.database?.name })
+    console.log('The database has been connected')
+  })
+
+  afterAll(async () => {
+    await mongoose.connection.close()
+    console.log('The database has been disconnected')
+  })
+
+  it('should return 200', async () => {
+    const responseOfRegistration = await request(app.server)
+      .post('/api/v1/users/register')
+      .expect('Content-Type', /json/)
+      .send({
+        phoneNumber: faker.phone.number('62######'),
+        name: faker.person.fullName()
+      })
+    console.log(responseOfRegistration.body)
+    const response = await request(app.server)
+      .post('/api/v1/users/access-token')
+      .expect('Content-Type', /json/)
+      .send({
+        refreshToken: responseOfRegistration.body?.result?.refreshToken
+      })
+
+    expect(response.body.code).toBe(200)
+  })
+
+  it('should return 400 (Expired Token)', async () => {
+    const response = await request(app.server)
+      .post('/api/v1/users/access-token')
+      .expect('Content-Type', /json/)
+      .send({
+        refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDYzM2E4N2VhMmZiOThjNjJjZTdmMGUiLCJpYXQiOjE2ODQyMjUzNzAsImV4cCI6MTY4NDIyNjI3MH0.EmZIEVGR9CaigxHp4ecan2n9oQV1iToBQ66PYCC_GME'
+      })
+
+    expect(response.body.code).toBe(400)
   })
 })

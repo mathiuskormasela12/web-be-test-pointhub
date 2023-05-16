@@ -35,12 +35,23 @@ class UserService {
           phoneNumber: body.phoneNumber
         })
 
-        const { accessToken, refreshToken } = generateToken(result._id.toString())
+        const { accessToken, refreshToken, error = '' } = generateToken(result._id.toString())
+
+        if (error.length > 0) {
+          return {
+            code: 400,
+            message: 'Failed to generate token',
+            errors: {
+              token: [error]
+            }
+          }
+        }
 
         return {
           code: 201,
           message: 'Register Successfully',
           result: {
+            _id: result._id.toString(),
             accessToken,
             refreshToken
           }
@@ -66,12 +77,23 @@ class UserService {
       }).lean().select({ _id: 1 })
 
       if (user != null) {
-        const { accessToken, refreshToken } = generateToken(user._id.toString())
+        const { accessToken, refreshToken, error = '' } = generateToken(user._id.toString())
+
+        if (error.length > 0) {
+          return {
+            code: 400,
+            message: 'Failed to generate token',
+            errors: {
+              token: [error]
+            }
+          }
+        }
 
         return {
           code: 200,
           message: 'Login Successfully',
           result: {
+            _id: user._id.toString(),
             accessToken,
             refreshToken
           }
@@ -100,12 +122,23 @@ class UserService {
     try {
       const decoded = jwt.verify(body.refreshToken, config?.refreshToken?.secretKey ?? '')
 
-      const { accessToken, refreshToken } = generateToken(typeof decoded === 'object' ? decoded.userId : '')
+      const { accessToken, refreshToken, error = '' } = generateToken(typeof decoded === 'object' ? decoded.userId : '')
+
+      if (error.length > 0) {
+        return {
+          code: 400,
+          message: 'Failed to generate token',
+          errors: {
+            token: [error]
+          }
+        }
+      }
 
       return {
         code: 200,
         message: 'The access token has been created',
         result: {
+          _id: typeof decoded === 'object' ? decoded.userId : '',
           accessToken,
           refreshToken
         }
