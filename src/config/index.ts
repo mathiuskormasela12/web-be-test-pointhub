@@ -4,7 +4,10 @@ import 'dotenv/config'
 
 export default {
   port: process.env?.PORT ?? 3000,
-  dbUri: process.env?.DB_URI ?? '',
+  database: {
+    uri: process.env?.DB_URI ?? '',
+    name: process.env?.DB_NAME ?? ''
+  },
   env: process.env?.NODE_ENV ?? 'development',
   accessToken: {
     secretKey: process.env?.ACCESS_TOKEN_SECRET_KEY,

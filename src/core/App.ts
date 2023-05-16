@@ -48,7 +48,7 @@ class App {
     this.app.use(cors(corsOptions))
 
     // Setup database
-    mongoose.connect(config?.dbUri)
+    mongoose.connect(config?.database?.uri, { dbName: config?.database?.name })
       .then(() => { console.log('The database has been connected') })
       .catch((err: Error) => { console.log(err) })
 
