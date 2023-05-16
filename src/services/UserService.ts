@@ -127,7 +127,7 @@ class UserService {
           }
         }
       } else {
-        console.log('MACBOOK =>', errors)
+        console.log(errors)
         return {
           code: 400,
           message: 'Failed to login',
