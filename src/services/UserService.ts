@@ -13,6 +13,10 @@ import { failedResponseCreateAccessTokenExample, failedResponseLoginUserExample,
 @Route('/api/v1/users')
 @Tags('Users')
 class UserService {
+  /**
+	 * Register a new User
+	 * This is an API to create a new user
+	 */
   @SuccessResponse(201, successResponseRegisterUserExample.message)
   @Example<IResponse<IRegisterUserResponse>>(successResponseRegisterUserExample)
   @Response<IResponse<IRegisterUserResponse>>(400, failedResponseRegisterUserExample.message, failedResponseRegisterUserExample)
@@ -71,6 +75,10 @@ class UserService {
     }
   }
 
+  /**
+	 * Login
+	 * This is an API to log in to an account
+	 */
   @SuccessResponse(201, successResponseLoginUserExample.message)
   @Example<IResponse<IRegisterUserResponse>>(successResponseLoginUserExample)
   @Response<IResponse<IRegisterUserResponse>>(400, failedResponseLoginUserExample.message, failedResponseLoginUserExample)
@@ -124,6 +132,10 @@ class UserService {
     }
   }
 
+  /**
+	 * Create Access Token
+	 * This is an API to create a new access token & refresh token
+	 */
   @SuccessResponse(200, 'Success to Generate Access Token')
   @Example<IResponse<IRegisterUserResponse>>(successResponseCreateAccessTokenExample)
   @Response<IResponse<IRegisterUserResponse>>(400, 'Failed to Generate Access Token', failedResponseCreateAccessTokenExample)

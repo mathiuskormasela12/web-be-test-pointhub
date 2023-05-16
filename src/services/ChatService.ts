@@ -12,6 +12,10 @@ import { failedToGetChatListsResponse, failedToSendChatResponse, successToGetCha
 @Route('/api/v1/chats')
 @Tags('Chats')
 class ChatService {
+  /**
+	 * Send a Chat
+	 * This is an API to send a new message
+	 */
   @Security('jwt', ['x-access-token'])
   @SuccessResponse(200, 'Success Send Chat')
   @Example<IResponse<ISendChatResponse>>(successToSendChatResponse)
@@ -47,6 +51,10 @@ class ChatService {
     }
   }
 
+  /**
+	 * Get a Chat Lists
+	 * This is an API to get chat lists
+	 */
   @Security('jwt', ['x-access-token'])
   @SuccessResponse(200, 'Success Get Chat Lists')
   @Example<IResponse<IGetChatListResponse>>(successToGetChatListsResponse)
