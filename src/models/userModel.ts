@@ -17,4 +17,6 @@ const schema: Schema = new Schema({
   timestamps: true
 })
 
+schema.index({ phoneNumber: 1 })
+
 export default model<IUserSchemaModel>('User', schema)

@@ -49,3 +49,24 @@ export const validateLoginUserBody = [
     return true
   }
 ]
+
+export const validateCreateAccessTokenBody = [
+  body('refreshToken', 'refresh token is required').notEmpty(),
+  body('refreshToken', 'refresh token is invalid').isJWT(),
+
+  (req: Request, res: Response, next: NextFunction): Response | boolean => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      const result = parsingValidationError(errors.array())
+
+      return response(res, {
+        code: 400,
+        errors: result
+      })
+    }
+
+    next()
+    return true
+  }
+]

@@ -17,6 +17,12 @@ class UserController {
     const result = await userService.loginUser(req.body)
     return response<IRegisterUserResponse>(res, result)
   }
+
+  public async createAccessToken (req: Request, res: Response): Promise<Response> {
+    const userService = new UserService()
+    const result = userService.createAccessToken(req.body)
+    return response<IRegisterUserResponse>(res, result)
+  }
 }
 
 export default new UserController()

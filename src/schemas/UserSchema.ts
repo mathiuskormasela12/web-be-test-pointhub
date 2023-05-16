@@ -1,6 +1,5 @@
 // ========== User Schema
 // import all modules
-
 import mongoose from 'mongoose'
 
 export interface IRegisterUserSchemaBody {
@@ -19,4 +18,8 @@ export interface IUserSchemaModel {
   photo?: string
   createdAt: Date
   updatedAt: Date
+}
+
+export interface ICreateAccessTokenBody {
+  refreshToken: string
 }
