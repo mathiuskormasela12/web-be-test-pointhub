@@ -7,7 +7,7 @@ import { parsingValidationError } from '../helpers/parsingValidationError'
 
 export const validateRegisterUserBody = [
   body('name', 'name is required').notEmpty(),
-  body('name', 'name should be a string').isString(),
+  body('name', 'name should be an alpha numeric').isAlphanumeric(),
 
   body('phoneNumber', 'phone number is required').notEmpty(),
   body('phoneNumber', 'phone number is invalid').isMobilePhone('any'),
