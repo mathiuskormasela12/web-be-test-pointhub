@@ -10,6 +10,7 @@ import swaggerUi from 'swagger-ui-express'
 import config from '../config'
 import UserRoutes from '../routes/User'
 import ChatRoutes from '../routes/Chat'
+import CustomerRoutes from '../routes/Customer'
 
 class App {
   private readonly app: Application
@@ -65,6 +66,7 @@ class App {
 
     this.app.use('/api/v1', UserRoutes.routes)
     this.app.use('/api/v1', ChatRoutes.routes)
+    this.app.use('/api/v1', CustomerRoutes.routes)
   }
 
   public get server (): Application {
