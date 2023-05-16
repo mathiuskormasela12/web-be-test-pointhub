@@ -15,3 +15,9 @@ export interface IChatSchemaBody {
   receiverId: mongoose.Types.ObjectId
   chat: string
 }
+
+export interface IGetChatListResponse {
+  _id: mongoose.Types.ObjectId
+  chat: string
+  createdAt: string
+}

@@ -20,6 +20,7 @@ export const validateRegisterUserBody = [
 
       return response(res, {
         code: 400,
+        message: 'Unprocessable Entity',
         errors: result
       })
     }
@@ -41,6 +42,7 @@ export const validateLoginUserBody = [
 
       return response(res, {
         code: 400,
+        message: 'Unprocessable Entity',
         errors: result
       })
     }

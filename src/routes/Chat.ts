@@ -17,6 +17,7 @@ class ChatRoutes extends IRoutes {
 
   private setup (): void {
     this.router.post('/chats', authMiddleware.isLoggedIn, validateSendChatBody, ChatController.sendChat)
+    this.router.get('/chats/:receiverId', authMiddleware.isLoggedIn, ChatController.getChatLists)
   }
 
   public get routes (): Router {
