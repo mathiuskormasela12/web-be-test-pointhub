@@ -52,7 +52,7 @@ describe('POST - Register User', () => {
 
 describe('POST - Login User', () => {
   beforeAll(async () => {
-		await mongoose.connect(config?.database?.uri, { dbName: config?.database?.name })
+    await mongoose.connect(config?.database?.uri, { dbName: config?.database?.name })
     console.log('The database has been connected')
   })
 
