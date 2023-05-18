@@ -13,7 +13,6 @@ import { failedToGetChatListsResponse, failedToSendChatResponse, successToGetCha
 @Tags('Chats')
 class ChatService {
   /**
-	 * Send a Chat
 	 * This is an API to send a new message
 	 */
   @Security('jwt', ['x-access-token'])
@@ -52,7 +51,6 @@ class ChatService {
   }
 
   /**
-	 * Get a Chat Lists
 	 * This is an API to get chat lists
 	 */
   @Security('jwt', ['x-access-token'])

@@ -15,7 +15,6 @@ import { failedResponseCreateAccessTokenExample, failedResponseLoginUserExample,
 @Tags('Users')
 class UserService {
   /**
-	 * Register a new User
 	 * This is an API to create a new user
 	 */
   @SuccessResponse(201, successResponseRegisterUserExample.message)
@@ -79,7 +78,6 @@ class UserService {
   }
 
   /**
-	 * Login
 	 * This is an API to log in to an account
 	 */
   @SuccessResponse(201, successResponseLoginUserExample.message)
@@ -145,7 +143,6 @@ class UserService {
   }
 
   /**
-	 * Create Access Token
 	 * This is an API to create a new access token & refresh token
 	 */
   @SuccessResponse(200, 'Success to Generate Access Token')

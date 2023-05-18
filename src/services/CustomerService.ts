@@ -13,7 +13,6 @@ import { failedCreateCustomerExample, failedCreateInvoiceExample, failedServerCr
 @Tags('Customers')
 class CustomerService {
   /**
-	 * Create Customer
 	 * This API can be used to create a customer data
 	*/
   @Security('jwt', ['x-access-token'])
@@ -68,7 +67,6 @@ class CustomerService {
   }
 
   /**
-	 * Create Invoice
 	 * This API can be used to create a invoice data
 	*/
   @Security('jwt', ['x-access-token'])
@@ -124,7 +122,6 @@ class CustomerService {
   }
 
   /**
-	 * Get Invoice
 	 * This API can be used to get invoice data
 	*/
   @Security('jwt', ['x-access-token'])
